@@ -3,6 +3,7 @@
 
 import pandas as pd
 import plotly.express as px
+from io import StringIO
 
 # -----------------------------
 # Step 1: Load the employee data
@@ -20,7 +21,6 @@ EMP009,Finance,Europe,88.2,10,4.3
 EMP010,R&D,Asia,95.6,7,4.9
 """
 
-from io import StringIO
 df = pd.read_csv(StringIO(data))
 
 # -----------------------------
@@ -32,13 +32,20 @@ print(f"Frequency count for R&D department: {rd_count}")
 # -----------------------------
 # Step 3: Histogram (interactive)
 # -----------------------------
-fig = px.histogram(df, x="department", color="department", 
+fig = px.histogram(df, x="department", color="department",
                    title="Department Distribution of Employees")
 
 # -----------------------------
-# Step 4: Save as HTML
+# Step 4: Save as HTML (with email embedded)
 # -----------------------------
 html_file = "employee_performance_analysis.html"
+
+# Save the chart
 fig.write_html(html_file)
+
+# Inject your email at the bottom of the HTML file
+with open(html_file, "a", encoding="utf-8") as f:
+    f.write(f"\n<!-- Verification Email: blakpot32@gmail.com -->\n")
+    f.write(f"<p style='text-align:center;font-size:14px;color:gray;'>Verification Email: blakpot32@gmail.com</p>")
 
 print(f"HTML file saved as: {html_file}")
