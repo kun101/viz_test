@@ -36,16 +36,23 @@ fig = px.histogram(df, x="department", color="department",
                    title="Department Distribution of Employees")
 
 # -----------------------------
-# Step 4: Save as HTML (with email embedded)
+# Step 4: Save as HTML (with email + Python code embedded)
 # -----------------------------
 html_file = "employee_performance_analysis.html"
 
-# Save the chart
+# Save the chart first
 fig.write_html(html_file)
 
-# Inject your email at the bottom of the HTML file
+# Append email + Python code to HTML
+with open(__file__, "r", encoding="utf-8") as f:
+    python_code = f.read()
+
 with open(html_file, "a", encoding="utf-8") as f:
     f.write(f"\n<!-- Verification Email: blakpot32@gmail.com -->\n")
     f.write(f"<p style='text-align:center;font-size:14px;color:gray;'>Verification Email: blakpot32@gmail.com</p>")
+    f.write("<h3>Embedded Python Code:</h3>")
+    f.write("<pre><code>")
+    f.write(python_code)
+    f.write("</code></pre>")
 
 print(f"HTML file saved as: {html_file}")
